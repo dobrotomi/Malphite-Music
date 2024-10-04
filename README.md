@@ -4,6 +4,7 @@
 ## Before you start, make sure you have the following:
  - `Node` 
  - `npm install`
+ - `npm tailwind:css`
  - `/orarend` folder, might work without it
  - `config.json` for youtube cookies
  - `MongoDB`
