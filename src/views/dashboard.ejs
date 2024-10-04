@@ -1,0 +1,16 @@
+<%- include("./partials/header.ejs") %>
+<%- include("./partials/navbar.ejs") %>
+
+<link rel="stylesheet" href="/css/dashboard.css">
+
+<div class="box container">
+  <h1>Select a server</h1>
+  <div class="guilds">
+    <% user.guilds.forEach(guild => { %>
+      <% if(guild.owner || guild.permissions == 2147483647) { %>
+        <%- include("partials/guild.ejs", { guild, botid, guilds }) %>
+        <% } %>
+    <% }) %>
+  </div>
+</div>
+<%- include('./partials/footer.ejs') %>

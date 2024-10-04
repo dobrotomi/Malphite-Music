@@ -1,0 +1,20 @@
+<div class="leaderboards">
+  <div class="box">
+    <h2>Smoke Leaderboard</h2>
+    <% if(smokers.length !== 0) { %> 
+      <% smokers.forEach(user => { %>
+        <div><%= user[1].name + " - " + user[1].cigi %></div>
+      <% }) %> <% } else { %>
+        <div>Empty</div>
+    <% } %>
+  </div>
+  <div class="box">
+    <h2>RPG Leaderboard</h2>
+    <% if(balance.length !== 0) { %> 
+      <% balance.forEach(user => { %>
+        <div><%= user[1].name + " - " + user[1].balance %>$</div>
+      <% }); %> <% } else { %>
+        <div>Empty</div>
+    <% } %>
+  </div>
+</div>

@@ -1,0 +1,84 @@
+
+.guilds {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    gap: 40px;
+    width: 100%;
+    margin-top: 60px;
+    margin-bottom: 60px;
+}
+
+@media (max-width: 1200px) {
+    .guilds {
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+    }
+}
+@media (max-width: 992px) {
+    .guilds {
+        grid-template-columns: 1fr 1fr 1fr;
+    }
+}
+@media (max-width: 768px) {
+    .guilds {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+@media (max-width: 480px) {
+    .guilds {
+        grid-template-columns: 1fr;
+    }
+}
+
+.guild {
+    width: 100%;
+}
+
+.guild h3 {
+    font-weight: bold;
+    color: white;
+}
+
+.guild div:nth-child(2) {
+    display: flex;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-top: 16px;
+}
+
+.guild_imgbg {
+    background: rgb(31, 33, 41);
+    position: absolute;
+    inset: 0px;
+    z-index: 1;
+    transform: scale(1.2);
+    filter: blur(10px);
+    opacity: 0.3;
+
+}
+
+.guildin {
+    position: relative;
+    display: flex;
+    -webkit-box-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    align-items: center;
+    border-radius: 8px;
+    background: rgb(31, 33, 41);
+    height: 152px;
+    width: 100%;
+    overflow: hidden;
+
+}
+
+.guildin img {
+    width: 84px; 
+    height: 84px;
+    position: relative;
+    z-index: 2;
+    border: 2px solid rgb(242, 244, 251);
+    border-radius: 50%;
+    filter: drop-shadow(rgba(0, 0, 0, 0.16) 0px 32px 72px); 
+}
+
