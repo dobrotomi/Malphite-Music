@@ -1,0 +1,130 @@
+<%- include("./partials/header.ejs") %>
+<%- include("./partials/navbar.ejs") %>
+
+<link rel="stylesheet" href="/css/owner.css">
+<link rel="stylesheet" href="/css/dashboard.css">
+
+<script>
+    function openTab(evt, tabName) {
+        var i, x, tablinks;
+        x = document.getElementsByClassName("content-tab");
+        for (i = 0; i < x.length; i++) {
+            x[i].style.display = "none";
+        }
+        tablinks = document.getElementsByClassName("tab");
+        for (i = 0; i < x.length; i++) {
+            tablinks[i].className = tablinks[i].className.replace(" is-active", "");
+        }
+        document.getElementById(tabName).style.display = "block";
+        evt.currentTarget.className += " is-active";
+    }
+</script>
+<div class="box container">
+    <div class="tabs">
+        <ul>
+            <li class="tab is-active" onclick="openTab(event,'BotThings')"><a >Bot Things</a></li>
+            <li class="tab" onclick="openTab(event,'Guilds')"><a >Guilds</a></li>
+            <li class="tab" onclick="openTab(event,'Users')"><a >Users</a></li>
+            <li class="tab" onclick="openTab(event,'Log')"><a >Log</a></li>
+        </ul> 
+    </div>
+
+    <style>
+        #BotThings {
+            display: flex;
+            flex-direction: row;
+            gap: 10px;
+        }
+
+        .bot-status, .bot-warning, .bot-reload, .bot-disable {
+            align-items: center;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            height: 100%;
+            width: 100%;
+        }
+
+        .bot-reload div, .bot-disable div {
+            display: flex;
+            flex-direction: row;
+            gap: 10px;
+        }
+    </style>
+
+    <div class="section">
+        <div id="BotThings" class="content-tab">
+            <div class="box bot-status">
+                <h1>Set Bot Status</h1>
+                <textarea class="textarea" placeholder="e.g. Hello world"></textarea>
+                <button class="button is-link">Status</button>
+            </div>
+            <div class="box bot-warning">
+                <h1>Make a new warning</h1>
+                <textarea class="textarea" placeholder="e.g. Hello world"></textarea>
+                <button class="button is-warning">Warning</button>
+            </div>
+            <div class="box bot-reload">
+                <h1>Disable commands</h1>
+                <div>
+                    <h2>Command name</h2>
+                    <button class="button is-link is-small">Reload</button>
+                </div>
+                <div>
+                    <h2>Command name</h2>
+                    <button class="button is-link is-small">Reload</button>
+                </div>
+                <div>
+                    <h2>Command name</h2>
+                    <button class="button is-link is-small">Reload</button>
+                </div>
+                <div>
+                    <h2>Command name</h2>
+                    <button class="button is-link is-small">Reload</button>
+                </div>
+            </div>
+            <div class="box bot-disable">
+                <h1>Reload commands</h1>
+                <div>
+                    <h2>Command name</h2>
+                    <button class="button is-success is-small" disabled>Turn on</button>
+                    <button class="button is-danger is-small">Turn off</button>
+                </div>
+                <div>
+                    <h2>Command name</h2>
+                    <button class="button is-success is-small">Turn on</button>
+                    <button class="button is-danger is-small" disabled>Turn off</button>
+                </div>
+                <div>
+                    <h2>Command name</h2>
+                    <button class="button is-success is-small" disabled>Turn on</button>
+                    <button class="button is-danger is-small">Turn off</button>
+                </div>
+                <div>
+                    <h2>Command name</h2>
+                    <button class="button is-success is-small">Turn on</button>
+                    <button class="button is-danger is-small" disabled>Turn off</button>
+                </div>
+
+            </div>
+        </div>
+        <div id="Guilds" class="content-tab" style="display:none;">
+            <h1>Guilds</h1>
+            <div class="guilds">
+                <% guilds.forEach(guild => { %>
+                    <% let guilds = [guild.id] %>
+                    <%- include("partials/guild.ejs", { guild, guilds }) %>
+                <% }); %>
+            </div>
+        </div>
+        <div id="Users" class="content-tab" style="display:none;">
+            <h1>Users</h1>
+        </div>
+        <div id="Log" class="content-tab" style="display:none;">
+            <h1>Log</h1>
+        </div>
+    </div>
+
+</div>
+
+<%- include('./partials/footer.ejs') %>

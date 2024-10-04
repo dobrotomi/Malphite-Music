@@ -1,0 +1,89 @@
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // Get all elements with class 'navbar-link'
+        const navbarLinks = document.querySelectorAll('.navbar-link');
+
+        // Loop through the navbarLinks to add the click event listener
+        navbarLinks.forEach(navbarLink => {
+            navbarLink.addEventListener('click', () => {
+                // Toggle the 'is-active' class on the parent 'navbar-item has-dropdown' element
+                const dropdown = navbarLink.parentElement;
+                dropdown.classList.toggle('is-active');
+            });
+        });
+    });
+</script>
+
+<nav class="navbar" aria-label="main navigation">
+    <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+    </a>
+
+
+    <div id="navbarBasicExample" class="navbar-menu">
+        <div class="navbar-start">
+            <a class="navbar-item" href="/">
+                Home
+            </a>
+            <a class="navbar-item" href="/commands">
+                Commands
+            </a>
+            <% if(user) { %>
+                <a class="navbar-item" href="/dashboard">
+                    Dashboard
+                </a>
+                <% }%>
+        </div>
+
+        <div class="navbar-end">
+            <div class="buttons">
+                <% if(!user) { %>
+                    <a href="/auth" class="navbar-item">
+                            Login with Discord
+                    </a>
+                    <% } else { %>
+                        <div class="navbar-item has-dropdown">
+                            <% if(user) { %>
+
+                                <a class="navbar-link">
+                                    <div style="display: flex; flex-direction: row">
+                                        <img style="border-radius: 50%; margin-right: 5px;"
+                                            src="https://cdn.discordapp.com/avatars/<%= user.id %>/<%= user.avatar %>.png"
+                                            alt="">
+                                        <p style="color: white; margin-top: 2px;">
+                                            <%= user.username[0].toUpperCase() + user.username.slice(1) %>
+                                        </p>
+                                    </div>
+                                </a>
+
+                                <% }%>
+                                    <div class="navbar-dropdown is-right">
+                                            <% if(user.id=="241200420842635264" ) { %>
+                                                <a class="navbar-item" href="/owner">
+                                                    Owner
+                                                </a>
+                                            <% } %>
+                                                <a class="navbar-item" href="/orarend">
+                                                    Orarend
+                                                </a>
+                                                <a class="navbar-item" href="https://www.google.com/search?sca_esv=54d98b2102a48c5e&sxsrf=ADLYWIIiQImcLnSEh9BWUYbEim24EXbgcQ:1724205910335&q=swastika&udm=2&fbs=AEQNm0CRjlOtE433-CvsDZEksQ8zUchZAntv9lLo-e4ZT42ratBCI50jVD5EdzCOdux47zeiB6ovlrZ7ln5v-PWVI1zt7FBdXJAwlCfwWQFvMAd7Cu8USZ4Sm7rnyHK4BxQSOx3s26nNW2x5jFoGdFQSDqH4iS662KxsUgXX1YQt8Q2gHelXM7M&sa=X&ved=2ahUKEwjembjG_4SIAxV73AIHHYhoEmcQtKgLegQIDhAB&biw=2327&bih=1168&dpr=1.1">
+                                                    FAQ
+                                                </a>
+                                                <hr class="navbar-divider">
+                                                <a href="/auth/logout" class="navbar-item">
+                                                        Logout
+                                                </a>
+                                                <hr class="navbar-divider">
+                                                <div class="navbar-item">
+                                                    Version 1.0.0
+                                                </div>
+                                    </div>
+                                    <% } %>
+                        </div>
+            </div>
+        </div>
+    </div>
+</nav>

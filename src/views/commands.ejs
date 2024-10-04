@@ -1,0 +1,26 @@
+<%- include("./partials/header.ejs") %>
+<%- include("./partials/navbar.ejs") %>
+
+<link rel="stylesheet" href="/css/commands.css">
+
+
+<div class="groups">
+    <% groups.forEach(group => { %>
+        <a href="#<%= group %>" class="button is-link"><%= group %></a>
+    <%}); %>
+</div>
+<div class="groups">
+    <% groups.forEach(group => { %>
+        <div class="group box" id="<%= group %>">
+            <h1><%= group %></h1>
+            <% commands.forEach(command => { %>
+                <% if(command.group ===  group) { %>
+                    /<%= command.name %> - <%= command.description %>
+                    <br>
+                <% } %>
+            <% }); %>
+            <img class="mask" src="/images/commands/<%- group %>.gif" alt="<%- group %>">
+        </div>
+    <%}); %>
+</div>
+<%- include('./partials/footer.ejs') %>

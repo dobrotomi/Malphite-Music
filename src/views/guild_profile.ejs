@@ -1,0 +1,57 @@
+<%- include("./partials/header.ejs") %> <%- include("./partials/navbar.ejs") %>
+
+<link rel="stylesheet" href="/css/guild_profile.css" />
+
+<div class="container">
+  <h1><%= server.name %></h1>
+</div>
+
+
+<div class="box container">
+    <div class="tabs">
+      <ul>
+        <li class="tab is-active" onclick="openTab(event,'Summary')">
+          <a>Summary</a>
+        </li>
+        <li class="tab" onclick="openTab(event,'Leader')">
+          <a>Leaderboards</a>
+        </li>
+        <li class="tab" onclick="openTab(event,'Music')"><a>Music</a></li>
+        <li class="tab" onclick="openTab(event,'Log')"><a>Log</a></li>
+      </ul>
+    </div>
+
+    <div class="section">
+      <div id="Summary" class="content-tab">
+        <%- include("./partials/guild_profile/summary.ejs") %>
+      </div>
+      <div id="Leader" class="content-tab" style="display: none">
+        <%- include("./partials/guild_profile/leaderboards.ejs") %>
+      </div>
+      <div id="Music" class="content-tab" style="display: none">
+        <%- include("./partials/guild_profile/music.ejs") %>
+      <div id="Log" class="content-tab" style="display: none">
+        <%- include("./partials/guild_profile/log.ejs") %>
+      </div>
+    </div>
+</div>
+
+<script>
+  function openTab(evt, tabName) {
+    var i, x, tablinks;
+    x = document.getElementsByClassName("content-tab");
+    for (i = 0; i < x.length; i++) {
+      x[i].style.display = "none";
+    }
+    tablinks = document.getElementsByClassName("tab");
+    
+    for (i = 0; i < x.length; i++) {
+      tablinks[i].className = tablinks[i].className.replace(" is-active", "");
+    }
+    document.getElementById(tabName).style.display = "block";
+    //document.getElementById(tabName).className += " is-active"
+    evt.currentTarget.className += " is-active";
+  }
+</script>
+
+<%- include('./partials/footer.ejs') %>

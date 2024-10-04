@@ -1,0 +1,9 @@
+#mask {
+    filter: drop-shadow(0 0 0.75rem rgb(90, 163, 72));
+}
+@media only screen and (max-width: 1050px) {
+    #mask {
+    width: 50%;
+    height: auto;
+    }
+}
