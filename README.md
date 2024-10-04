@@ -4,6 +4,7 @@
 ## Before you start, make sure you have the following:
  - `Node` 
  - `npm install`
+ - `npm tailwind:css`
  - `/orarend` folder, might work without it
  - `config.json` for youtube cookies
  - `MongoDB`
@@ -16,7 +17,6 @@
   - `OWNER_ID` copy it from discord
   - `SPOTIFY_ID` you can get this from spotify developer page
   - `SPOTIFY_SECRET` you can get this from spotify developer page
-  - `` you can get this from the Firebase console
   - `IP` for the website 
   - `PORT` where you want to run the webapp
   - `MONGO_DB` for database
