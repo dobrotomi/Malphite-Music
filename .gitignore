@@ -2,6 +2,7 @@
 orarend/
 src/config.ts
 src/cookies.json
+src/public/css/output.css
 
 # Logs
 logs
@@ -133,3 +134,5 @@ dist
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.*
+
+
