@@ -1,4 +1,6 @@
 # own stuff
+orarend/
+src/config.ts
 src/cookies.json
 # Logs
 logs
