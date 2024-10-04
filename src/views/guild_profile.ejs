@@ -1,0 +1,365 @@
+<%- include("./partials/header.ejs") %> <%- include("./partials/navbar.ejs") %>
+
+<link rel="stylesheet" href="/css/guild_profile.css" />
+
+<div class="container" style="margin-bottom: 2rem">
+  <h1><%= server.name %></h1>
+</div>
+
+
+<div class="box container">
+    <div class="tabs">
+      <ul>
+        <li class="tab is-active" onclick="openTab(event,'Summary')">
+          <a>Summary</a>
+        </li>
+        <li class="tab" onclick="openTab(event,'Leader')">
+          <a>Leaderboards</a>
+        </li>
+        <li class="tab" onclick="openTab(event,'Music')"><a>Music</a></li>
+        <li class="tab" onclick="openTab(event,'Log')"><a>Log</a></li>
+      </ul>
+    </div>
+
+    <div class="section">
+      <div id="Summary" class="content-tab">
+        <div class="box">
+          <div>Server name: <%= server.name %></div>
+          <div>Joined at: <%= server.joinedAt %></div>
+          <div>DJ Role: <%= server.djrole == "" ? "OFF" : server.djrole %></div>
+        </div>
+      </div>
+      <div id="Leader" class="content-tab" style="display: none">
+        <div class="leaderboards">
+          <div class="box">
+            <h2>Smoke Leaderboard</h2>
+            <% smokers.forEach(user => { %>
+            <div><%= user[1].name + " - " + user[1].cigi %></div>
+            <% }) %>
+          </div>
+          <div class="box">
+            <h2>RPG Leaderboard</h2>
+            <% balance.forEach(user => { %>
+            <div><%= user[1].name + " - " + user[1].balance %>$</div>
+            <% }); %>
+          </div>
+        </div>
+      </div>
+      <div id="Music" class="content-tab" style="display: none">
+        <div class="music">
+          <div class="player-queue">
+            <div class="box music-player">
+              <div id="player02" class="player horizontal">
+                <div class="wrapper">
+                  <div class="info-wrapper" id="info-wrapper">
+                    <img src="https://cdn.pixabay.com/photo/2016/03/26/13/09/cup-of-coffee-1280537_1280.jpg"/>
+  
+                    <div class="info">
+                      
+                    </div>
+                  </div>
+  
+                  <div class="controls">
+                    <div class="prev">
+                      <i onclick="prev()" class="fa-solid fa-backward"></i>
+                    </div>
+                    <div class="stop">
+                      <i onclick="stop()" class="fa-solid fa-stop"></i>
+                    </div>
+                    <div class="play-pause">
+                      <i onclick="play()" class="fa-solid fa-play"></i>
+                      <i onclick="play()" class="fa-solid fa-pause"></i>
+                    </div>
+                    <div class="shuffle">
+                      <i onclick="shuffle()" class="fa-solid fa-shuffle"></i>
+                    </div>
+                    <div class="next">
+                      <i onclick="skip()" class="fa-solid fa-forward"></i>
+                    </div>
+                  </div>
+  
+                  <div class="track-time">
+                    <div class="track" id="track"></div>
+                    <div class="time">
+                      <div class="last-time" id="current">-</div>
+                      <div class="total-time" id="duration">-</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="box queue">
+              <div id="queue"></div>
+            </div>
+          </div>
+          <div class="playlist-role">
+            <div class="box playlist">
+              <h1>Saved playlists</h1>
+              <a onclick="channels()" class="js-modal-trigger" data-target="modal-js-example" ><p class="queue-box">faszfaszfasz</p></a>
+            </div>
+
+            <div id="modal-js-example" class="modal">
+              <div class="modal-background"></div>
+              
+              <style>
+                .channels {
+                  display: flex;
+                  flex-direction: column;
+                  gap: 8px;
+                  padding: 10px;
+                }
+                .channel-head:hover {
+                  cursor: pointer;
+                  color: gray;
+                }
+
+                .channel-head {
+                  display: flex;
+                  flex-direction: row;
+                  gap: 5px;
+                  align-items: center;
+                }
+
+                .users {
+                  display: flex;
+                  flex-direction: column;
+                  gap: 10px;
+                  padding: 10px 20px;
+                }
+                
+                .user {
+                  display: flex;
+                  flex-direction: row;
+                  gap: 8px;
+                  align-items: center;
+                }
+
+                .user img {
+                  border-radius: 50%;
+                  width: 28px;
+                }
+              </style>
+
+              <div class="modal-content">
+                <div class="box">
+                  <p>Select a channel where you want the bot to play</p>
+                  <div id="channels">
+
+                  </div>
+                </div>
+              </div>
+            
+              <button class="modal-close is-large" aria-label="close"></button>
+            </div>
+  
+            <div class="box role">
+              <h1>DJ Role</h1>
+              <div class="select">
+                <select name="role" id="role">
+                  <% roles.forEach(role => { %>
+                  <option value="<% role.id %>"><%= role.name %></option>
+                  <% }) %>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          
+        </div>
+      </div>
+      <div id="Log" class="content-tab" style="display: none"></div>
+    </div>
+</div>
+
+<script>
+
+document.addEventListener('DOMContentLoaded', () => {
+  // Functions to open and close a modal
+  function openModal($el) {
+    $el.classList.add('is-active');
+  }
+
+  function closeModal($el) {
+    $el.classList.remove('is-active');
+  }
+
+  function closeAllModals() {
+    (document.querySelectorAll('.modal') || []).forEach(($modal) => {
+      closeModal($modal);
+    });
+  }
+
+  // Add a click event on buttons to open a specific modal
+  (document.querySelectorAll('.js-modal-trigger') || []).forEach(($trigger) => {
+    const modal = $trigger.dataset.target;
+    const $target = document.getElementById(modal);
+
+    $trigger.addEventListener('click', () => {
+      openModal($target);
+    });
+  });
+
+  // Add a click event on various child elements to close the parent modal
+  (document.querySelectorAll('.modal-background, .modal-close, .modal-card-head .delete, .modal-card-foot .button') || []).forEach(($close) => {
+    const $target = $close.closest('.modal');
+
+    $close.addEventListener('click', () => {
+      closeModal($target);
+    });
+  });
+
+  // Add a keyboard event to close all modals
+  document.addEventListener('keydown', (event) => {
+    if(event.key === "Escape") {
+      closeAllModals();
+    }
+  });
+});
+
+</script>
+
+<script>
+  function openTab(evt, tabName) {
+    var i, x, tablinks;
+    x = document.getElementsByClassName("content-tab");
+    for (i = 0; i < x.length; i++) {
+      x[i].style.display = "none";
+    }
+    tablinks = document.getElementsByClassName("tab");
+    
+    for (i = 0; i < x.length; i++) {
+      tablinks[i].className = tablinks[i].className.replace(" is-active", "");
+    }
+    document.getElementById(tabName).style.display = "block";
+    //document.getElementById(tabName).className += " is-active"
+    evt.currentTarget.className += " is-active";
+  }
+</script>
+
+<script>
+  function musicPlayer() {
+    const id = "<%= server.id %>";
+    fetch(`/api/distube/${id}/queue`)
+      .then((response) => response.json())
+      .then((data) => {
+        //console.log(data);
+
+        const queueDiv = document.getElementById("queue");
+        const first = document.getElementById("first")
+        const duration = document.getElementById("duration")
+        const current = document.getElementById("current")
+        const infoWrapper = document.getElementById("info-wrapper")
+        const track = document.getElementById("track")
+
+        queueDiv.innerHTML = ""; // Clear the existing content
+        duration.innerHTML = "--";
+        current.innerHTML = "--";
+        infoWrapper.innerHTML = `<img src="/images/commands/music.gif"/>
+                                        <div class="info">
+                                          <h1>No music playing</h1>
+                                        </div>`
+        track.style.setProperty('--track-width', '1%');
+        if (data.error) {
+          const queueElement = document.createElement("div");
+          queueElement.innerHTML = `<p class="">${data.error}</p>`;
+          queueDiv.appendChild(queueElement);
+        } else {
+          let f = true;
+          data.forEach((element) => {
+            if(f) {
+              f = false;
+              duration.innerHTML = `${element.formattedDuration}`
+              current.innerHTML = `${element.formattedCurrentTime}`;
+              infoWrapper.innerHTML = `<img src="${element.thumbnail}"/>
+                                        <div class="info">
+                                          <h1>${element.name}</h1>
+                                        </div>`
+              track.style.setProperty('--track-width', `${(element.currentTime/element.duration)*100}%`);
+
+            } else {
+              const queueElement = document.createElement("div");
+              queueElement.innerHTML = `<a target="_blank"  href="${element.url}"><p class="queue-box">${element.name}</p></a>`;
+              queueDiv.appendChild(queueElement);
+            }
+          });
+        }
+      });
+  }
+
+  // Update stats immediately
+  musicPlayer();
+
+  // Update stats every 10 seconds
+  setInterval(musicPlayer, 2000);
+</script>
+
+<script>
+  const id = "<%= server.id %>";
+  function play() {
+    fetch(`/api/distube/play/${id}`)
+      .then((response) => response.json())
+      .then((data) => {})
+  }
+  function skip() {
+    fetch(`/api/distube/skip/${id}`)
+      .then((response) => response.json())
+      .then((data) => {})
+  }
+  function stop() {
+    fetch(`/api/distube/stop/${id}`)
+      .then((response) => response.json())
+      .then((data) => {})
+  }
+  function prev() {
+    fetch(`/api/distube/previous/${id}`)
+      .then((response) => response.json())
+      .then((data) => {})
+  }
+  function shuffle() {
+    fetch(`/api/distube/shuffle/${id}`)
+      .then((response) => response.json())
+      .then((data) => {})
+  }
+</script>
+
+<script>
+  function channels() {
+    fetch(`/api/discord/channels/${id}`)
+      .then((response) => response.json())
+      .then((data) => {
+        const channelsDiv = document.getElementById("channels")
+
+        channelsDiv.innerHTML = ""
+
+        if(data) {
+          data.forEach(e => {
+            const channel = document.createElement("div")
+            channel.classList.add("channel")
+
+            const channelHead = document.createElement("div")
+            channelHead.classList.add("channel-head")
+            channelHead.innerHTML = `<i class="fa-solid fa-volume-high"></i> <p>${e.channel}</p>`
+            channel.appendChild(channelHead)
+
+            const users = document.createElement("div")
+            users.classList.add("users")
+            
+
+            e.users.forEach(u => {
+              const user = document.createElement("div")
+              user.classList.add("user")
+              user.innerHTML = `<img src="${u.picture}" alt=""><p>${u.name}</p>`
+              users.appendChild(user)
+            })
+            channel.appendChild(channelHead)
+            channel.appendChild(users)
+            channelsDiv.appendChild(channel)
+          })
+        }
+      })
+  }
+</script>
+
+
+<%- include('./partials/footer.ejs') %>

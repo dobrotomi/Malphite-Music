@@ -1,0 +1,29 @@
+
+<div class="guild">
+    <% if(guild.icon != null) { %>
+        <div class="guildin">
+            <div class="guild_imgbg" style="background: url('https://cdn.discordapp.com/icons/<%= guild.id %>/<%= guild.icon %>.png') center center / cover no-repeat;;"></div>
+            <img src="https://cdn.discordapp.com/icons/<%= guild.id %>/<%= guild.icon %>.png" alt="">
+        </div>
+    <% } else { %>
+        <div class="guildin">
+            <div class="guild_imgbg"></div>
+            <img src="https://cdn.logojoy.com/wp-content/uploads/20210422095037/discord-mascot.png" alt="">
+        </div>
+
+    <% } %>
+    <div>
+        <div>
+            <h3><%= guild.name %></h3>
+            <p><%= guild.owner ? "Owner" : "Bot Master" %></p>
+        </div>
+        <% //console.log({id: `${guild.id}`}) %>
+        <% if(guilds.includes(`${guild.id}`)) { %>
+            <a class="button is-info" href="/dashboard/<%= guild.id %>">Go</a>
+        <% } else { %>
+            <a class="button is-dark" href="https://discord.com/oauth2/authorize?response_type=code&client_id=<%= botid %>&redirect_uri=http%3A%2F%2F3.71.87.18%3A8080%2Fdashboard<% botid %>&guild_id=<%= guild.id %>&permissions=8&scope=bot">Setup</a>
+        <% } %>
+        
+    </div>
+    
+</div>

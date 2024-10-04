@@ -1,0 +1,79 @@
+<%- include("./partials/header.ejs") %>
+<%- include("./partials/navbar.ejs") %>
+<div class="container" style="margin-bottom: 2rem;">
+    <h1><%= server.name %></h1>
+</div>
+
+<style>
+    .left {
+        flex: 20%; 
+        padding: 20px; 
+        box-sizing: border-box; 
+        margin: 10px;
+    }
+    .mid {
+        flex: 57%; 
+        padding: 20px; 
+        box-sizing: border-box; 
+        margin: 10px;
+    }
+    .right {
+        flex: 23%; 
+        padding: 20px; 
+        box-sizing: border-box; 
+        margin: 10px;
+    }
+</style>
+
+
+<div style="display: flex;">
+    <div class="left box">
+        
+    </div> 
+    <div class="mid box">
+        <div class="box">
+            <h1>Roles</h1>
+            <div class="select">
+                <select name="role" id="role">
+                <% roles.forEach(role => { %>
+                        <option value="<% role.id %>"><%= role.name %></option>
+                <% }) %>
+                </select>
+            </div>
+        </div>
+        <div class="box">
+            <h1>Music Player</h1>
+            <div>
+                
+            </div>
+        </div>
+    </div>
+    <div class="right box">
+        <h1>Summary</h1>
+        <div class="box">
+            <div>Server name: <%= server.name %></div>
+            <div>Joined at: <%= server.joinedAt %></div>
+            <div>DJ Role: <%= server.djrole == "" ? "OFF" : server.djrole %></div>
+        </div>
+        <h1>Leaderboards</h1>
+        <div class="box">
+            <h2>Smoke Leaderboard</h2>
+            <% smokers.forEach(user => { %>
+                <div><%= user[1].name + " - " + user[1].cigi %></div>
+            <% }) %>
+        </div>
+        <div class="box" >
+            <h2>RPG Leaderboard</h2>
+            <% balance.forEach(user => { %>
+                <div><%= user[1].name + " - " + user[1].balance %>$</div>
+            <% }); %>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+<%- include('./partials/footer.ejs') %>

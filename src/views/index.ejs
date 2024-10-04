@@ -1,0 +1,51 @@
+<%- include("./partials/header.ejs") %>
+<%- include("./partials/navbar.ejs") %>
+
+<link rel="stylesheet" href="/css/index.css">
+
+<div class="container">
+    <nav class="level">
+        <div class="level-item has-text-centered">
+          <div>
+            <p class="heading">Users</p>
+            <p class="title" id="user-count">0</p>
+          </div>
+        </div>
+        <div class="level-item has-text-centered">
+          <div>
+            <p class="heading">Servers</p>
+            <p class="title" id="guild-count">0</p>
+          </div>
+        </div>
+    </nav>
+    <div class="box" style="display: flex; align-items: center; margin: 20px;">
+        <div class="container">
+            <h2>This is a <strong>ROCK SOLID</strong> bot for Discord</h2>
+            <a class="button is-info" style="margin: 10px;" href="https://discord.com/oauth2/authorize?response_type=code&client_id=<%= botid %>&redirect_uri=http%3A%2F%2F3.71.87.18%3A8080%2Fdashboard<% botid %>&permissions=8&scope=bot">Add to server</a>
+        </div>
+        <img id="mask" src="/images/malphite_index.png" alt="">
+    </div>     
+    
+    
+</div>
+<script>
+  const userCountElement = document.getElementById('user-count');
+  const guildCountElement = document.getElementById('guild-count');
+
+  function updateStats() {
+    fetch('/api/discord/stats')
+      .then(response => response.json())
+      .then(data => {
+        //console.log(userCountElement)
+        userCountElement.textContent = data.userCount;
+        guildCountElement.textContent = data.guildCount;
+      });
+  }
+
+  // Update stats immediately
+  updateStats();
+
+  // Update stats every 10 seconds
+  setInterval(updateStats, 10000);
+</script>
+<%- include('./partials/footer.ejs') %>
